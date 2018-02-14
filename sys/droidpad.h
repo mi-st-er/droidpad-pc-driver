@@ -96,7 +96,7 @@ typedef UCHAR HID_REPORT_DESCRIPTOR, *PHID_REPORT_DESCRIPTOR;
 // HID descriptor of a 6-axis 12-button JS, which DroidPad uses.
 
 // Halfway on each axis
-#define JS_RESTING_PLACE 16384
+#define JS_RESTING_PLACE 127
 
 #ifdef USE_HARDCODED_HID_REPORT_DESCRIPTOR 
 
