@@ -418,7 +418,9 @@ copyInputData(
 	to->inputs.axisRX = from->axisRX;
 	to->inputs.axisRY = from->axisRY;
 	to->inputs.axisRZ = from->axisRZ;
-	to->inputs.buttons = from->buttons & 0xFFFF; // First 16 buttons only
+	to->inputs.slider = from->slider;
+	to->inputs.dial = from->dial;
+	to->inputs.buttons = from->buttons;
 	return;
 }
 
@@ -433,5 +435,7 @@ resetHidReport(
 	report->inputs.axisRX = JS_RESTING_PLACE;
 	report->inputs.axisRY = JS_RESTING_PLACE;
 	report->inputs.axisRZ = JS_RESTING_PLACE;
+	report->inputs.slider = JS_RESTING_PLACE;
+	report->inputs.dial = JS_RESTING_PLACE;
 	report->inputs.buttons = 0x0;
 }
