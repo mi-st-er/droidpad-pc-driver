@@ -422,6 +422,8 @@ VOID copyHidReport(
 		to->inputs.axisRX = from->inputs.axisRX;
 		to->inputs.axisRY = from->inputs.axisRY;
 		to->inputs.axisRZ = from->inputs.axisRZ;
+		to->inputs.slider = from->inputs.slider;
+		to->inputs.dial = from->inputs.dial;
 		to->inputs.buttons = from->inputs.buttons;
 		return;
 }
