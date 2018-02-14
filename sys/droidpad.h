@@ -100,7 +100,7 @@ typedef UCHAR HID_REPORT_DESCRIPTOR, *PHID_REPORT_DESCRIPTOR;
 
 #ifdef USE_HARDCODED_HID_REPORT_DESCRIPTOR 
 
-CONST  HID_REPORT_DESCRIPTOR       G_DefaultReportDescriptor[61] = {
+CONST  HID_REPORT_DESCRIPTOR       G_DefaultReportDescriptor[53] = {
     0x05, 0x01,                    // USAGE_PAGE (Generic Desktop)
     0x09, 0x04,                    // USAGE (Joystick)
     0xa1, 0x01,                    // COLLECTION (Application)
@@ -111,26 +111,22 @@ CONST  HID_REPORT_DESCRIPTOR       G_DefaultReportDescriptor[61] = {
     0x09, 0x33,                    //     USAGE (Rx)
     0x09, 0x34,                    //     USAGE (Ry)
     0x09, 0x35,                    //     USAGE (Rz)
+    0x09, 0x36,                    //     USAGE (Slider)
+    0x09, 0x37,                    //     USAGE (Dial)
     0x15, 0x00,                    //     LOGICAL_MINIMUM (0)
-    0x26, 0xff, 0x7f,              //     LOGICAL_MAXIMUM (32767)
-    0x75, 0x20,                    //     REPORT_SIZE (32)
-    0x95, 0x06,                    //     REPORT_COUNT (6)
+    0x26, 0xff, 0x00,              //     LOGICAL_MAXIMUM (255)      // even on 24" (60 cm) screen 1/255 is ~2.5 mm - way less than a finger width
+    0x75, 0x08,                    //     REPORT_SIZE (8)
+    0x95, 0x08,                    //     REPORT_COUNT (8)
     0x81, 0x02,                    //     INPUT (Data,Var,Abs)
-    0x75, 0x40,                    //     REPORT_SIZE (64)
-    0x95, 0x01,                    //     REPORT_COUNT (1)
-    0x81, 0x01,                    //     INPUT (Cnst,Ary,Abs)
     0xc0,                          //   END_COLLECTION
     0x05, 0x09,                    //   USAGE_PAGE (Button)
     0x19, 0x01,                    //   USAGE_MINIMUM (Button 1)
-    0x29, 0x0c,                    //   USAGE_MAXIMUM (Button 12)
+    0x29, 0x20,                    //   USAGE_MAXIMUM (Button 32)
     0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
     0x25, 0x01,                    //   LOGICAL_MAXIMUM (1)
     0x75, 0x01,                    //   REPORT_SIZE (1)
-    0x95, 0x0c,                    //   REPORT_COUNT (12)
+    0x95, 0x20,                    //   REPORT_COUNT (32)
     0x81, 0x02,                    //   INPUT (Data,Var,Abs)
-    0x75, 0x14,                    //   REPORT_SIZE (20)
-    0x95, 0x01,                    //   REPORT_COUNT (1)
-    0x81, 0x01,                    //   INPUT (Cnst,Ary,Abs)
     0xc0                           // END_COLLECTION
 };
 
@@ -155,16 +151,15 @@ CONST HID_DESCRIPTOR G_DefaultHidDescriptor = {
 typedef struct _HID_INPUT_REPORT {
 	union {
 		struct {
-			LONG	axisX;
-			LONG	axisY;
-			LONG	axisZ;
-			LONG	axisRX;
-			LONG	axisRY;
-			LONG	axisRZ;
-			LONG	_u1; // Unused
-			LONG	_u2;
-			USHORT	buttons;	// 16 Buttons (12 used)
-			USHORT	_unused1;
+			USHORT	axisX; // 8 bit is enough
+			USHORT	axisY; //  even on 24" (60 cm) screen 1/255 is ~2.5 mm
+			USHORT	axisZ; //  way less than a finger width
+			USHORT	axisRX;
+			USHORT	axisRY;
+			USHORT	axisRZ;
+			USHORT	slider;
+			USHORT	dial;
+			ULONG	buttons; // 32 Buttons
 		} inputs;
 		UCHAR raw[36];
 	};
